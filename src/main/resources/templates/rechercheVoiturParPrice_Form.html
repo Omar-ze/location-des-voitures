@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <link rel="icon" th:href="@{${'/images/logo.png'}}">
+  <link rel="stylesheet" type="text/css" th:href="@{${'Css/style.css'}}"/>
+  <title>Listes des Voitures</title>
+  <!----style ajoute--->
+  <!----style ajoute -->
+  <!--<< Favcion >>-->
+  <link rel="shortcut icon" href="assets/img/favicon.png">
+  <!--<< Bootstrap min.css >>-->
+  <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+  <!--<< All Min Css >>-->
+  <link rel="stylesheet" href="assets/css/all.min.css">
+  <!--<< Animate.css >>-->
+  <link rel="stylesheet" href="assets/css/animate.css">
+  <!--<< Magnific Popup.css >>-->
+  <link rel="stylesheet" href="assets/css/magnific-popup.css">
+  <!--<< MeanMenu.css >>-->
+  <link rel="stylesheet" href="assets/css/meanmenu.css">
+  <!--<< DatePicker.css >>-->
+  <link rel="stylesheet" href="assets/css/datepickerboot.css">
+  <!--<< Swiper Bundle.css >>-->
+  <link rel="stylesheet" href="assets/css/swiper-bundle.min.css">
+  <!--<< Nice Select.css >>-->
+  <link rel="stylesheet" href="assets/css/nice-select.css">
+  <!--<< Main.css >>-->
+  <link rel="stylesheet" href="assets/css/main.css">
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="author" content="pixydrops">
+  <meta name="description" content="Remons - Booking Rental HTML Template">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <link rel="icon" th:href="@{${'/images/logo.png'}}">
+  <link rel="stylesheet" type="text/css" th:href="@{${'Css/style.css'}}"/>
+</head>
+<body>
+<!-- Header Top Section Start -->
+
+<!-- Header Top Section Start -->
+
+<!-- Header Top Section Start -->
+
+<!--Start Navbar-->
+<nav class="navbar navbar-expand-lg navbar-light bg-light p-0">
+  <div class="container">
+    <a class="navbar-brand text-uppercase fw-bold text-dark" th:href="@{/}"><img class="w-50"
+                                                                                 th:src="@{${'/images/icone.png'}}"><span></span><span></span></a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+            data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+            aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav  mb-2 mb-lg-0 mx-auto text-center">
+        <li class="nav-item">
+          <a class="nav-link fw-bold text-dark" aria-current="page" th:href="@{/voitures}">Voitures</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link fw-bold text-dark" th:href="@{/voitures/loue}">Voitures Reserver</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link fw-bold text-dark" th:href="@{/voitures/disponible}">Voitures Disponible</a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link fw-bold text-dark" th:href="@{/voitures/price}">Recherche Voitures par prix</a>
+
+        </li>
+
+      </ul>
+    </div>
+  </div>
+</nav>
+<!--End Navbar-->
+<div class="container">
+  <br>
+  <br>
+  <form  name="maForm1" th:action="@{/getVoitureByPrice}"   method="Get"  >
+
+Prix: <input type="text" th:value="${price}"  name="price"   />
+    <input type="submit" name="action"  value="Recherche"  class="btn btn-danger m-2" />
+
+  </form>
+
+<br>
+  <br>
+
+  <table class="table table-hover">
+    <tr>
+      <th>Picture</th>
+      <th>Voiture Id</th>
+      <th>Licence</th>
+      <th>Mileage</th>
+      <th>Model</th>
+      <th>prix</th>
+      <th>Status</th>
+      <th>Year</th>
+      <th></th>
+    </tr>
+    <tbody>
+    <tr th:each="voiture : ${listVoiture}">
+      <td><img th:src="@{${'/images/'+voiture.getPicture()}}" class="w-100"></td>
+      <td th:text="${voiture.getIdVoiture()}"></td>
+      <td th:text="${voiture.getLicense()}"></td>
+      <td th:text="${voiture.getMileage()}"></td>
+      <td th:text="${voiture.getModel()}"></td>
+      <td th:text="${voiture.getPrice()}"></td>
+      <td th:text="${voiture.getStatus()}"></td>
+      <td th:text="${voiture.getYear()}"></td>
+      <td>
+        <a th:href="@{/Client/{idVoiture}(idVoiture=${voiture.getIdVoiture()})} " title="Rent"><img
+                th:src="@{${'/images/rent.png'}}"></a></li>
+        <a th:href="@{/getAllInformationVoiture/{idVoiture}(idVoiture=${voiture.getIdVoiture()})}"
+           title="Detail Reservation"><img th:src="@{${'/images/info.png'}}"></a>
+        <a th:href="@{/voituresReturn/{idVoiture}(idVoiture=${voiture.getIdVoiture()})}"
+           title="Retourner Voiture"> <img th:src="@{${'/images/return.png'}}"></a>
+        <a th:href="@{/voitures/Delete/{idVoiture}(idVoiture=${voiture.getIdVoiture()})}"
+           title="Delete Voiture"> <img th:src="@{${'/images/delete.png'}}"></a>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- Footer Section Start -->
+<footer class="footer-section fix">
+  <div class="container">
+    <div class="footer-widgets-wrapper">
+      <div class="row justify-content-between">
+        <div class="col-xl-3 col-lg-4 col-md-6 wow fadeInUp" data-wow-delay=".2s">
+          <div class="single-footer-widget shape-map">
+            <div class="widget-head">
+              <h4>Contact</h4>
+            </div>
+            <div class="footer-content">
+              <p>
+                8 Boulvard Abdelkhalek Trisse Fes. Maroc
+              </p>
+              <ul class="contact-info">
+                <li>
+                  <i class="fa-regular fa-envelope"></i>
+                  <a href="mailto:needhelp@company.com">abisoft@gmail.com</a>
+                </li>
+                <li>
+                  <i class="fa-solid fa-phone-volume"></i>
+                  <a href="tel:926668880000">+112 (566) 888 000</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-2 col-lg-4 col-md-6 wow fadeInUp" data-wow-delay=".4s">
+          <div class="single-footer-widget">
+            <div class="widget-head">
+              <h4>Contact</h4>
+            </div>
+            <ul class="list-items">
+              <li>
+                <a href="about.html">
+                  About Us
+                </a>
+              </li>
+              <li>
+                <a href="car-details.html">
+                  New Cars
+                </a>
+              </li>
+              <li>
+                <a href="news-details.html">
+                  Latest News
+                </a>
+              </li>
+              <li>
+                <a href="gallery.html">
+                  Gallery
+                </a>
+              </li>
+              <li>
+                <a href="contact.html">
+                  Contact
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="col-xl-3 col-lg-4 col-md-6 wow fadeInUp" data-wow-delay=".6s">
+          <div class="single-footer-widget">
+            <div class="widget-head">
+              <h4>Gallery</h4>
+            </div>
+            <div class="footer-gallery">
+              <div class="gallery-wrap">
+                <div class="gallery-item">
+                  <div class="thumb">
+                    <a href="assets/img/footer/gallery-1.jpg" class="img-popup">
+                      <img src="assets/img/footer/gallery-1.jpg" alt="gallery-img">
+                      <div class="icon">
+                        <i class="far fa-plus"></i>
+                      </div>
+                    </a>
+                  </div>
+                  <div class="thumb">
+                    <a href="assets/img/footer/gallery-2.jpg" class="img-popup">
+                      <img src="assets/img/footer/gallery-2.jpg" alt="gallery-img">
+                      <div class="icon">
+                        <i class="far fa-plus"></i>
+                      </div>
+                    </a>
+                  </div>
+                  <div class="thumb">
+                    <a href="assets/img/footer/gallery-3.jpg" class="img-popup">
+                      <img src="assets/img/footer/gallery-3.jpg" alt="gallery-img">
+                      <div class="icon">
+                        <i class="far fa-plus"></i>
+                      </div>
+                    </a>
+                  </div>
+                </div>
+                <div class="gallery-item">
+                  <div class="thumb">
+                    <a href="assets/img/footer/gallery-4.jpg" class="img-popup">
+                      <img src="assets/img/footer/gallery-4.jpg" alt="gallery-img">
+                      <div class="icon">
+                        <i class="far fa-plus"></i>
+                      </div>
+                    </a>
+                  </div>
+                  <div class="thumb">
+                    <a href="assets/img/footer/gallery-5.jpg" class="img-popup">
+                      <img src="assets/img/footer/gallery-5.jpg" alt="gallery-img">
+                      <div class="icon">
+                        <i class="far fa-plus"></i>
+                      </div>
+                    </a>
+                  </div>
+                  <div class="thumb">
+                    <a href="assets/img/footer/gallery-6.jpg" class="img-popup">
+                      <img src="assets/img/footer/gallery-6.jpg" alt="gallery-img">
+                      <div class="icon">
+                        <i class="far fa-plus"></i>
+                      </div>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-3 col-lg-4 col-md-6 wow fadeInUp" data-wow-delay=".8s">
+          <div class="single-footer-widget">
+            <div class="widget-head">
+              <h4>Newsletter</h4>
+            </div>
+            <div class="footer-content">
+              <p>Subscribe our newsletter to get our latest update & news</p>
+              <div class="footer-input">
+                <input type="email" id="email2" placeholder="Email address">
+                <button class="newsletter-btn" type="submit">
+                  <i class="fa-regular fa-paper-plane"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-wrapper">
+        <p class="wow fadeInUp" data-wow-delay=".4s">
+          © Copyright 2024 by <a href="index.html">Remons.com</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
+        integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
+        integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
+        crossorigin="anonymous"></script>
+</body>
+</html>
